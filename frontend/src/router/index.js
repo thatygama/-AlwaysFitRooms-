@@ -23,10 +23,7 @@ const router = new Router({
     {
       path: '/dashboard',
       name: 'dashboard',
-      component: Dashboard,
-      meta: {
-        requiresAuth: true
-      }
+      component: Dashboard
     }
   ]
 });

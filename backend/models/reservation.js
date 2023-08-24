@@ -1,14 +1,14 @@
 'use strict';
 const { Model } = require('sequelize');
 
-module.exports = (sequelize, DataTypes) => {
-  class Reservation extends Model {
-    static associate(models) {
-      Reservation.belongsTo(models.User, { foreignKey: 'user_id' });
-      Reservation.belongsTo(models.Room, { foreignKey: 'room_id' });
-    }
+class Reservation extends Model {
+  static associate(models) {
+    Reservation.belongsTo(models.User, { foreignKey: 'user_id' });
+    Reservation.belongsTo(models.Room, { foreignKey: 'room_id' });
   }
-  
+}
+
+module.exports = (sequelize, DataTypes) => {  
   Reservation.init({
     user_id: {
       type: DataTypes.INTEGER,
@@ -37,6 +37,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Reservation',
+    tableName: 'reservations'
   });
   
   return Reservation;

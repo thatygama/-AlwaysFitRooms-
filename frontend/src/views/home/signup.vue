@@ -7,20 +7,20 @@
         <form>
           <div class="div_input">
             <label for="name">Name:</label>
-            <input type="text" id="name" v-model="name" placeholder="Enter your name">
+            <input type="text" id="name" v-model="user.name" placeholder="Enter your name">
           </div>
   
           <div class="div_input">
             <label for="email">Email:</label>
-            <input type="email" id="email" v-model="email" placeholder="Enter your email">
+            <input type="email" id="email" v-model="user.email" placeholder="Enter your email">
           </div>
   
           <div class="div_input">
             <label for="password">Password:</label>
-            <input type="password" id="password" v-model="password" placeholder="Enter your password">
+            <input type="password" id="password" v-model="user.password" placeholder="Enter your password">
           </div>
   
-          <button type="submit">Sign Up</button>
+          <button type="button" @click="registerUser">Sign Up</button>
 
           <div class="div_info">
           <p class="login-return-message">
@@ -29,18 +29,57 @@
           </div>
         </form>
       </div>
+
+      <div v-if="dialogInfoVisible">
+      <DialogInfo
+        :infoMessage="infoText" 
+        @close="dialogInfoVisible = false"
+      />
+    </div>
     </div>
   </template>
   
   <script>
+  import UserPresenter from '@Presenters/user-presenter';
+  import DialogInfo from '@Components/dialog-info';
+
   export default {
     name: 'SignUpPage',
+    components: {
+      DialogInfo
+    },
     data() {
       return {
-        name: '',
-        email: '',
-        password: ''
+        user: {
+          name: null,
+          email: null,
+          password: null
+        },
+        dialogInfoVisible: false,
+        infoText: null
       };
+    },
+    methods: {
+        async registerUser() {
+          console.log(this.user)
+          if (this.user.name && this.user.email && this.user.password) {
+          await UserPresenter.store({ ...this.user })
+          .then(response => {
+            console.log(response)
+            this.$router.push({ name: 'home' });
+          })
+          .catch(error => {
+            console.log(error)
+            this.infoText = error.error;
+            this.dialogInfoVisible = true;
+            console.log(this.dialogInfoVisible)
+          });
+        } else {
+            console.log('INFORME!')
+        }
+
+        console.log('rodou')
+      }
     }
   }
   </script>
