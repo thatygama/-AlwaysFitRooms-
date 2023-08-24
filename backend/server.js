@@ -30,16 +30,11 @@ sequelize.authenticate()
   });
 
 
-const userRoutes = require("./routes/userRoutes");
-const roomRoutes = require("./routes/roomRoutes");
-const reservationRoutes = require("./routes/reservationRoutes");
-
-app.use("/api", userRoutes);
-app.use("/api", roomRoutes);
-app.use("/api", reservationRoutes);
+const allRoutes = require("./routes");
+app.use("/api", allRoutes);
 
 app.use('/api', (req, res) => {
-    res.status(404).json({ message: 'Rota não encontrada' });
+    res.status(404).json({ message: 'Route not found!' });
   });
 
 

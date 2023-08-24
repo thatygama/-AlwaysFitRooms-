@@ -2,6 +2,10 @@
   <div id="container">
     <h1>Book your room</h1>
 
+    <div class="rooms">
+      <Rooms />
+    </div>
+
     <div class="calendar">
       <FullCalendar />
     </div>
@@ -10,11 +14,12 @@
 
 <script>
 import FullCalendar from '@Components/calendar';
+import Rooms from '@Components/rooms'
 
 export default {
   name: 'DashboardPage',
   components: {
-    FullCalendar
+    FullCalendar, Rooms
   },
 }
 </script>
